@@ -60,9 +60,11 @@ class BATTERY(MAGDaemon):
         return retval
 
     def checkup(self, subtopic):
-        self.checks["time"] = time.time()
-        self.logger.debug(f"Publishing: {self.checks} to {subtopic}")
-        self.publish(f"{self.config.name}/{subtopic}", json.dumps(self.checks))
+        named_checks = {f"{self.config.name} {k}": v for (k, v) in self.checks.items()}
+        self.last_checkup = time.time()
+        named_checks["time"] = self.last_checkup
+        self.logger.debug(f"Publishing: {named_checks} to {subtopic}")
+        self.publish(f"{self.config.name}/{subtopic}", json.dumps(named_checks))
 
 
     def main(self):
@@ -84,10 +86,14 @@ class BATTERY(MAGDaemon):
             reading = self.handle_modbus(self.instr.read_registers, 113, 16)
             new_checks.update(dict(zip(fields, reading)))
             
+            now = time.time()
+            try:
+                new_checks["Time Since Last"] = now - self.last_checkup
+            except AttributeError:
+                pass
             self.checks = new_checks
             self.checkup("run")
             """ processing time... """
-            now = time.time()
             target_time += length
             wait_time = target_time - now
             if wait_time <= 0.0:

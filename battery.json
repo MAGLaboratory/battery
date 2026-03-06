@@ -1,5 +1,5 @@
 {
-	"name": "battery00",
+	"name": "batt00",
 	"comment": "This is a configuration file for the battery.",
 	"daemon": {
 		"loglevel": "debug"
