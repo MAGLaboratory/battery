@@ -1,0 +1,3 @@
+[submodule "MAGLabPyLib"]
+	path = MAGLabPyLib
+	url = https://github.com/MAGLaboratory/MAGLabPyLib.git
