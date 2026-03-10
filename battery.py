@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import minimalmodbus, time, json
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
@@ -63,9 +65,11 @@ class BATTERY(MAGDaemon):
         named_checks = {f"{self.config.name} {k}": v for (k, v) in self.checks.items()}
         self.last_checkup = time.time()
         named_checks["time"] = self.last_checkup
-        self.logger.debug(f"Publishing: {named_checks} to {subtopic}")
+        if subtopic == "checkup":
+            self.logger.info(f"Publishing {subtopic}: {named_checks}")
+        else:
+            self.logger.debug(f"Publishing {subtopic}: {named_checks}")
         self.publish(f"{self.config.name}/{subtopic}", json.dumps(named_checks))
-
 
     def main(self):
         self.logger.debug("Calling super main")
