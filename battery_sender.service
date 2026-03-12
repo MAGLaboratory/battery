@@ -1,0 +1,14 @@
+[Unit]
+Description=Battery Sender
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=maglab
+Group=maglab
+Restart=on-failure
+EnvironmentFile=/home/maglab/battery/battery.env
+ExecStart=/home/maglab/battery/battery.py
+
+[Install]
+WantedBy=multi-user.target
