@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import minimalmodbus, time, json
+import minimalmodbus, time, json, sys
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from typing import * 
@@ -40,7 +40,7 @@ class BATTERY(MAGDaemon):
     def on_message(self, client, userdata, message):
         if message.topic in self.config.mqtt.data_sources:
             if message.topic.endswith("checkup_req"):
-                self.logger.info("Received checkup")
+                self.logger.debug("Received checkup")
                 self.checkup("checkup")
         else:
             self.logger.warning("Message not in data sources")
@@ -103,7 +103,9 @@ class BATTERY(MAGDaemon):
             if wait_time <= 0.0:
                 wait_time = 0.0
 
+        return self.exit_code
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     battery = BATTERY()
-    battery.main()
+    sys.exit(battery.main())
