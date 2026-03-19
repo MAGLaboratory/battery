@@ -2,7 +2,7 @@
 	"name": "batt00",
 	"comment": "This is a configuration file for the battery.",
 	"daemon": {
-		"loglevel": "info"
+		"loglevel": "warning"
 	},
 	"mqtt": {
 		"data_sources": ["reporter/checkup_req"],
@@ -10,7 +10,7 @@
 		"port": 1883,
 		"timeout": 15,
 		"dis_timeout": 90,
-		"loglevel": "info"
+		"loglevel": "warning"
 	},
 	"modbus": {
 		"port": "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_B0029B6Q-if00-port0",
@@ -18,5 +18,5 @@
 		"timeout": 0.08,
 		"baud": 9600
 	},
-	"loglevel": "info"
+	"loglevel": "warning"
 }
