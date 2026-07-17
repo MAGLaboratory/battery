@@ -99,6 +99,7 @@ class BATTERY(MAGDaemon):
             self.checkup("run")
             """ processing time... """
             target_time += length
+            now = time.time()
             wait_time = target_time - now
             if wait_time <= 0.0:
                 wait_time = 0.0

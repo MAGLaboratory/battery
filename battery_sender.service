@@ -2,6 +2,7 @@
 Description=Battery Sender
 Wants=network-online.target
 After=network-online.target
+startLimitBurst=50
 
 [Service]
 User=maglab
